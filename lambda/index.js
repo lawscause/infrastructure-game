@@ -4,7 +4,7 @@ const { DynamoDBDocumentClient, ScanCommand, PutCommand, UpdateCommand, DeleteCo
 const client = new DynamoDBClient({});
 const ddb = DynamoDBDocumentClient.from(client);
 const TABLE = process.env.TABLE_NAME || 'InfrastructureCards';
-const CATEGORIES = ['AI / ML', 'Compute', 'Deployment / Hosting', 'Backend', 'Database'];
+const CATEGORIES = ['Compute', 'Deployment / Hosting', 'Frontend', 'Backend', 'Database', 'Storage', 'Networking', 'Authentication / Identity', 'AI / ML', 'DevOps / CI-CD', 'Monitoring / Observability', 'Messaging / Event Systems'];
 
 const response = (statusCode, body) => ({
   statusCode,

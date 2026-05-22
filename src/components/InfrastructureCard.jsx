@@ -14,6 +14,7 @@ export default function InfrastructureCard({ card, onEdit, onDelete, draggable, 
       <div className={`w-full h-full rounded-xl shadow-lg border-2 ${getCardBorder(card.color)} transition-transform duration-500 ${flipped ? '[transform:rotateY(180deg)]' : ''}`} style={{ transformStyle: 'preserve-3d' }}>
         {/* Front */}
         <div className={`absolute inset-0 rounded-xl ${getCardBg(card.color)} text-white p-4 flex flex-col items-center justify-center backface-hidden`} style={{ backfaceVisibility: 'hidden' }}>
+          {card.image && <img src={card.image} alt={card.name} className="w-16 h-16 object-contain mb-2 rounded" />}
           <h3 className="text-lg font-bold text-center">{card.name}</h3>
           <span className="text-xs mt-2 bg-white/20 px-2 py-1 rounded">{card.category}</span>
           {(onEdit || onDelete) && (

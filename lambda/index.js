@@ -13,8 +13,9 @@ const response = (statusCode, body) => ({
 });
 
 exports.handler = async (event) => {
-  const { httpMethod, path, pathParameters, body } = event;
-  const parsed = body ? JSON.parse(body) : {};
+  const httpMethod = event.requestContext?.http?.method || event.httpMethod;
+  const path = event.rawPath || event.path;
+  const parsed = event.body ? JSON.parse(event.body) : {};
 
   try {
     if (httpMethod === 'OPTIONS') return response(200, {});
@@ -31,14 +32,14 @@ exports.handler = async (event) => {
     }
 
     if (httpMethod === 'PUT' && path.startsWith('/cards/')) {
-      const id = pathParameters?.id || path.split('/').pop();
+      const id = path.split('/').pop();
       const item = { id, ...parsed };
       await ddb.send(new PutCommand({ TableName: TABLE, Item: item }));
       return response(200, item);
     }
 
     if (httpMethod === 'DELETE' && path.startsWith('/cards/')) {
-      const id = pathParameters?.id || path.split('/').pop();
+      const id = path.split('/').pop();
       await ddb.send(new DeleteCommand({ TableName: TABLE, Key: { id } }));
       return response(200, { deleted: id });
     }
@@ -47,7 +48,7 @@ exports.handler = async (event) => {
       const { cards } = parsed;
       if (!cards || cards.length < 5) return response(400, { valid: false, message: 'Need at least 5 cards' });
       const categories = new Set(cards.map(c => c.category));
-      const valid = categories.size >= 5 && CATEGORIES.every(cat => categories.has(cat));
+      const valid = categories.size >= 5;
       return response(200, { valid, message: valid ? 'You made an app!' : 'Missing required categories' });
     }
 

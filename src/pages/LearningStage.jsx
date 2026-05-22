@@ -40,6 +40,7 @@ export default function LearningStage({ cards, addCard, updateCard, deleteCard, 
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold text-white">📚 Learning Stage</h2>
+        <img src="/ABCs.jpeg" alt="ABCs" className="h-16 rounded" />
         <button onClick={() => { setEditing(null); setModalOpen(true) }} className="px-4 py-2 bg-white/20 text-white rounded-lg hover:bg-white/30">+ Add Card</button>
       </div>
       <p className="text-white/80 text-center text-xl mb-2">Each card reveals a webdev tool and explains what it does. Pay close attention to the color coding for each category.</p>

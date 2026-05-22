@@ -2,7 +2,7 @@ export default function Navigation({ currentStage, setCurrentStage, gameWon }) {
   const stages = [
     { id: 'learning', label: 'Learning' },
     { id: 'building', label: 'Building' },
-    { id: 'proving', label: 'Proving', disabled: !gameWon },
+    { id: 'proving', label: 'Quiz', disabled: !gameWon },
   ]
   return (
     <nav className="flex gap-2">

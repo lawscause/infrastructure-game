@@ -29,7 +29,7 @@ export default function ProvingStage({ selectedCards, setCurrentStage, notify })
 
   return (
     <div className="max-w-2xl mx-auto space-y-6">
-      <h2 className="text-2xl font-bold text-white">🎓 Proving Stage</h2>
+      <h2 className="text-2xl font-bold text-white">🎓 Quiz</h2>
       <p className="text-white/60">Categorize each card correctly to prove your understanding. You have 3 attempts.</p>
       <p className="text-white/40 text-sm">Attempts: {attempts}/3</p>
       <div className="space-y-4">

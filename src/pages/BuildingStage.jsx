@@ -116,7 +116,7 @@ export default function BuildingStage({ cards, notify, winRound, setCurrentStage
         <h2 className="text-2xl font-bold text-white">🏗️ Building Stage</h2>
         <div className="flex gap-3 items-center">
           <span className="text-white/60 text-sm">Cards remaining: {deck.length - dropIndex}</span>
-          {gameWon && <button onClick={() => setCurrentStage('proving')} className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-400 font-bold">→ Proving Stage</button>}
+          {gameWon && <button onClick={() => setCurrentStage('proving')} className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-400 font-bold">→ Quiz</button>}
         </div>
       </div>
 

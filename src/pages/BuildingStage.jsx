@@ -35,31 +35,43 @@ export default function BuildingStage({ cards, notify, winRound, setCurrentStage
     setGameStarted(true)
   }
 
+  const dropNext = (currentIndex) => {
+    const nextIndex = currentIndex + 1
+    setDropIndex(nextIndex)
+    if (nextIndex < deck.length && !gameWon) {
+      const delay = Math.max(400, 3000 - nextIndex * 150)
+      timerRef.current = setTimeout(() => setDroppedCard(deck[nextIndex]), delay)
+    }
+  }
+
   useEffect(() => {
     if (!gameStarted || gameWon || dropIndex >= deck.length) return
-    const delay = Math.max(400, 3000 - dropIndex * 150)
-    timerRef.current = setTimeout(() => setDroppedCard(deck[dropIndex]), delay)
+    if (dropIndex === 0) {
+      const delay = 3000
+      timerRef.current = setTimeout(() => setDroppedCard(deck[0]), delay)
+    }
     return () => clearTimeout(timerRef.current)
-  }, [gameStarted, dropIndex, deck, gameWon])
+  }, [gameStarted])
 
   const handleDragStart = (e, card) => {
     e.dataTransfer.setData('card', JSON.stringify(card))
+    setDroppedCard(null)
+    clearTimeout(timerRef.current)
+    dropNext(dropIndex)
   }
 
   const handleDrop = (card) => {
     setWarning('')
     if (placedCards.length >= 5) {
-      setWarning('Maximum 5 cards allowed!')
+      setWarning('Wrong!')
       return
     }
     if (placedCards.find(c => c.category === card.category)) {
-      setWarning(`Duplicate category! You already have a "${card.category}" card.`)
+      setWarning('Wrong!')
       return
     }
     const newPlaced = [...placedCards, card]
     setPlacedCards(newPlaced)
-    setDroppedCard(null)
-    setDropIndex(i => i + 1)
 
     const categories = new Set(newPlaced.map(c => c.category))
     if (newPlaced.length >= 5 && categories.size >= 5) {
@@ -73,7 +85,8 @@ export default function BuildingStage({ cards, notify, winRound, setCurrentStage
   const skipCard = () => {
     setWarning('')
     setDroppedCard(null)
-    setDropIndex(i => i + 1)
+    clearTimeout(timerRef.current)
+    dropNext(dropIndex)
   }
 
   if (!gameStarted) {
@@ -145,7 +158,7 @@ export default function BuildingStage({ cards, notify, winRound, setCurrentStage
           </DropZone>
         </div>
         {warning && (
-          <div className="bg-yellow-500/90 text-black px-4 py-3 rounded-lg font-medium max-w-xs self-center">
+          <div className="bg-red-500/90 text-white px-4 py-3 rounded-lg font-bold max-w-xs self-center">
             ⚠️ {warning}
           </div>
         )}

@@ -93,7 +93,7 @@ export default function BuildingStage({ cards, notify, winRound, setCurrentStage
     return (
       <div className="flex flex-col items-center justify-center py-16 gap-8">
         <h2 className="text-3xl font-bold text-white">🏗️ Building Stage</h2>
-        <p className="text-white/60 text-center max-w-md">Cards will drop one at a time. Drag them into the play area to build a valid infrastructure stack with 5 unique categories.</p>
+        <p className="text-white/60 text-center max-w-md text-lg">Cards will drop one at a time. Drag them into the play area to build a valid infrastructure stack with 5 unique categories.</p>
         <div className="relative w-48 h-64">
           {cards.slice(0, 8).map((_, i) => (
             <div

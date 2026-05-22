@@ -25,30 +25,21 @@
                               │ HTTPS
                               ▼
 ┌─────────────────────────────────────────────────────────────────────────┐
-│                    AMAZON API GATEWAY (HTTP API)                         │
-│              (Lambda HTTP routing layer - auto-deploy)                   │
+│                       AWS LAMBDA                                         │
+│                (InfrastructureGameAPI)                                   │
 │                                                                         │
-│  Routes:                                                                │
+│  • Runtime: Node.js 20.x                                                │
+│  • Exposed via Lambda Function URL                                      │
+│  • Single function, route-based logic                                   │
+│  • Environment: TABLE_NAME=InfrastructureCards                          │
+│                                                                         │
+│  Endpoints:                                                             │
 │  ├── GET    /cards                                                      │
 │  ├── POST   /cards                                                      │
 │  ├── PUT    /cards/{id}                                                 │
 │  ├── DELETE /cards/{id}                                                 │
 │  ├── POST   /validate-round                                            │
 │  └── POST   /validate-proving-stage                                    │
-│                                                                         │
-│  • CORS enabled (all origins)                                           │
-│  • $default stage with auto-deploy                                      │
-└─────────────────────────────┬───────────────────────────────────────────┘
-                              │ AWS_PROXY integration
-                              ▼
-┌─────────────────────────────────────────────────────────────────────────┐
-│                       AWS LAMBDA                                         │
-│                (InfrastructureGameAPI)                                   │
-│                                                                         │
-│  • Runtime: Node.js 20.x                                                │
-│  • Handler: index.handler                                               │
-│  • Single function, route-based logic                                   │
-│  • Environment: TABLE_NAME=InfrastructureCards                          │
 │                                                                         │
 │  IAM Role: InfrastructureGameLambdaRole                                 │
 │  ├── AWSLambdaBasicExecutionRole                                        │
@@ -79,23 +70,22 @@
 
 
 ═══════════════════════════════════════════════════════════════════════════
-                         DEPLOYMENT DETAILS
-═══════════════════════════════════════════════════════════════════════════
-
-  Account:    868775176951
-  Region:     us-west-2
-  API URL:    https://p59le7eqlb.execute-api.us-west-2.amazonaws.com
-
-═══════════════════════════════════════════════════════════════════════════
                           DATA FLOW
 ═══════════════════════════════════════════════════════════════════════════
 
   1. User visits Amplify-hosted URL
-  2. React app loads, fetches cards from API Gateway
-  3. API Gateway proxies request to Lambda
-  4. Lambda queries DynamoDB, returns card data
-  5. User interacts with game (Learning → Building → Quiz)
-  6. Game validation requests go through same API path
+  2. React app loads, fetches cards from Lambda Function URL
+  3. Lambda queries DynamoDB, returns card data
+  4. User interacts with game (Learning → Building → Quiz)
+  5. Game validation requests go through same Lambda URL
+
+═══════════════════════════════════════════════════════════════════════════
+                       APPROVED STACK
+═══════════════════════════════════════════════════════════════════════════
+
+  ✅ AWS Amplify        — Frontend hosting & CI/CD
+  ✅ AWS Lambda         — Backend compute (Function URL)
+  ✅ Amazon DynamoDB    — Data storage
 
 ═══════════════════════════════════════════════════════════════════════════
 ```

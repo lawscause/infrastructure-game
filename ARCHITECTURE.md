@@ -25,8 +25,8 @@
                               │ HTTPS
                               ▼
 ┌─────────────────────────────────────────────────────────────────────────┐
-│                    AMAZON API GATEWAY                                    │
-│                      (HTTP API)                                          │
+│                    AMAZON API GATEWAY (HTTP API)                         │
+│              (Lambda HTTP routing layer - auto-deploy)                   │
 │                                                                         │
 │  Routes:                                                                │
 │  ├── GET    /cards                                                      │
